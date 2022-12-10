@@ -3,36 +3,11 @@
  */
 package com.xdpiqbx;
 
-import com.xdpiqbx.db.services.DatabaseInitService;
-import com.xdpiqbx.db.services.DatabasePopulateService;
-import com.xdpiqbx.db.services.DatabaseQueryService;
-
-import java.math.BigInteger;
-import java.time.LocalDate;
+import com.xdpiqbx.db.services.DatabaseMigrateService;
 
 public class App {
     public static void main(String[] args) {
-//        DatabaseInitService.initDatabase();
-//        DatabasePopulateService.populateDatabase();
+        DatabaseMigrateService.migrateDatabase();
 //        DatabaseQueryService.printResult();
-
-//        DatabasePopulateService.addWorker(
-//                "Will Smith",
-//                LocalDate.now().minusYears(45),
-//                DatabasePopulateService.Level.SENIOR,
-//                3900);
-
-//        DatabasePopulateService.addClient("John D. Rockefeller");
-
-//        DatabasePopulateService.addProject(
-//                BigInteger.valueOf(8),
-//                LocalDate.now().minusDays(100),
-//                LocalDate.now().plusDays(50)
-//        );
-
-//        DatabasePopulateService.addProjectWorker(
-//                BigInteger.valueOf(4),
-//                BigInteger.valueOf(15)
-//        );
     }
 }

@@ -16,9 +16,6 @@ import java.time.LocalDate;
 public class DatabasePopulateService {
     private static final Database db = Database.getInstance();
     private static final Connection connection = db.getConnection();
-    public static void main(String[] args) {
-        populateDatabase();
-    }
     private static void populate(String pathToFile){
         try {
             String sql = String.join("\n", Files.readAllLines(Paths.get(pathToFile)));
@@ -74,10 +71,10 @@ public class DatabasePopulateService {
         }
     }
 
-    public static void populateDatabase(){
-        String initDbFile = Helper.env("SQL_FILES_PATH") + "populate_db.sql";
-        populate(initDbFile);
-    }
+//    public static void populateDatabase(){
+//        String initDbFile = Helper.env("SQL_FILES_PATH") + "populate_db.sql";
+//        populate(initDbFile);
+//    }
 
     public enum Level{
         TRAINEE, JUNIOR, MIDDLE, SENIOR;
