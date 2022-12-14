@@ -2,9 +2,7 @@ package com.xdpiqbx.db.services;
 
 import com.xdpiqbx.db.DataModels.Client;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class ClientService {
@@ -17,7 +15,8 @@ public class ClientService {
     public ClientService(Connection connection){
         try {
             this.createSt = connection.prepareStatement(
-            "INSERT INTO client (name) VALUES (?)"
+            "INSERT INTO client (name) VALUES (?)",
+                Statement.RETURN_GENERATED_KEYS
             );
             this.getByIdSt = connection.prepareStatement(
             "SELECT name FROM client WHERE id = ?"
@@ -37,18 +36,36 @@ public class ClientService {
     }
 
     public long create(String name){
-        return -1;
+        try {
+            createSt.setString(1, name);
+            int affectedRows = createSt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+            try (ResultSet generatedKeys = createSt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getLong(1);
+                }
+                else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
     public String getById(long id){
+        //getByIdSt
         return null;
     }
     public void setName(long id, String name){
-
+        //setNameSt
     }
     public void deleteById(long id){
-
+        //deleteByIdSt
     }
     public List<Client> listAll(){
+        //getAllSt
         return null;
     }
 }

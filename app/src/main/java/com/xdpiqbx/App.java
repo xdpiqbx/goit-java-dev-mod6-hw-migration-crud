@@ -3,12 +3,20 @@
  */
 package com.xdpiqbx;
 
+import com.xdpiqbx.db.Database;
+import com.xdpiqbx.db.services.ClientService;
 import com.xdpiqbx.db.services.DatabaseMigrateService;
 import com.xdpiqbx.db.services.DatabaseQueryService;
 
 public class App {
     public static void main(String[] args) {
-        DatabaseMigrateService.migrateDatabase();
-        DatabaseQueryService.printResult();
+//        DatabaseMigrateService.migrateDatabase();
+//        DatabaseQueryService.printResult();
+        Database db = Database.getInstance();
+
+        ClientService clientService = new ClientService(db.getConnection());
+
+        long id = clientService.create("New Client");
+        System.out.println("id = " + id);
     }
 }
