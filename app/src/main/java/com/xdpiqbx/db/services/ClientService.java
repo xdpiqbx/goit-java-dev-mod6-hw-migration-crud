@@ -3,6 +3,7 @@ package com.xdpiqbx.db.services;
 import com.xdpiqbx.db.DataModels.Client;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientService {
@@ -11,7 +12,6 @@ public class ClientService {
     private PreparedStatement setNameSt;
     private PreparedStatement deleteByIdSt;
     private PreparedStatement getAllSt;
-
     public ClientService(Connection connection){
         try {
             this.createSt = connection.prepareStatement(
@@ -34,7 +34,6 @@ public class ClientService {
             throw new RuntimeException(e);
         }
     }
-
     public long create(String name){
         try {
             createSt.setString(1, name);
@@ -68,13 +67,34 @@ public class ClientService {
         }
     }
     public void setName(long id, String name){
-        //setNameSt
+        try {
+            setNameSt.setString(1, name);
+            setNameSt.setLong(2, id);
+            setNameSt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void deleteById(long id){
-        //deleteByIdSt
+        try {
+            deleteByIdSt.setLong(1, id);
+            deleteByIdSt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
     public List<Client> listAll(){
-        //getAllSt
-        return null;
+        try(ResultSet rs = getAllSt.executeQuery()){
+            List<Client> clientsList = new ArrayList<>();
+            while(rs.next()){
+                Client client = new Client();
+                client.setId(rs.getLong("id"));
+                client.setName(rs.getString("name"));
+                clientsList.add(client);
+            }
+            return clientsList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
