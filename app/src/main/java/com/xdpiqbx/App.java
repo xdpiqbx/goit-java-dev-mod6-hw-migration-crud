@@ -16,7 +16,11 @@ public class App {
 
         ClientService clientService = new ClientService(db.getConnection());
 
-        long id = clientService.create("New Client");
-        System.out.println("id = " + id);
+//        long id = clientService.create("New Client");
+//        System.out.println("id = " + id);
+
+//        System.out.println(clientService.getById(5));
+
+
     }
 }

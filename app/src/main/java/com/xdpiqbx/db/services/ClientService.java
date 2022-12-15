@@ -40,14 +40,14 @@ public class ClientService {
             createSt.setString(1, name);
             int affectedRows = createSt.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("Creating user failed, no rows affected.");
+                throw new SQLException("Creating client failed, no rows affected.");
             }
             try (ResultSet generatedKeys = createSt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     return generatedKeys.getLong(1);
                 }
                 else {
-                    throw new SQLException("Creating user failed, no ID obtained.");
+                    throw new SQLException("Creating client failed, no ID obtained.");
                 }
             }
         } catch (SQLException e) {
@@ -55,8 +55,17 @@ public class ClientService {
         }
     }
     public String getById(long id){
-        //getByIdSt
-        return null;
+        try{
+            getByIdSt.setLong(1, id);
+            try(ResultSet rs = getByIdSt.executeQuery()){
+                if(!rs.next()){
+                    throw new SQLException("Selecting client failed, ID: ["+id+"] isn't existing.");
+                }
+                return rs.getString("name");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void setName(long id, String name){
         //setNameSt
