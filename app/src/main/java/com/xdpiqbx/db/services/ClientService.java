@@ -36,6 +36,7 @@ public class ClientService {
     }
     public long create(String name){
         try {
+            isValidName(name);
             createSt.setString(1, name);
             int affectedRows = createSt.executeUpdate();
             if (affectedRows == 0) {
@@ -68,6 +69,7 @@ public class ClientService {
     }
     public void setName(long id, String name){
         try {
+            isValidName(name);
             setNameSt.setString(1, name);
             setNameSt.setLong(2, id);
             setNameSt.executeUpdate();
@@ -95,6 +97,14 @@ public class ClientService {
             return clientsList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    private void isValidName(String name) throws IllegalArgumentException{
+        // CHECK (CHAR_LENGTH(name) > 1 AND CHAR_LENGTH(name) < 1000)
+        int nameLength = name.length();
+        boolean dbCheckName = nameLength > 1 && nameLength < 1000;
+        if(!dbCheckName){
+            throw new IllegalArgumentException("Invalid name length");
         }
     }
 }

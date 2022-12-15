@@ -3,7 +3,6 @@
  */
 package com.xdpiqbx;
 
-import com.xdpiqbx.db.DataModels.Client;
 import com.xdpiqbx.db.Database;
 import com.xdpiqbx.db.services.ClientService;
 import com.xdpiqbx.db.services.DatabaseMigrateService;
@@ -13,22 +12,22 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-//        DatabaseMigrateService.migrateDatabase();
-//        DatabaseQueryService.printResult();
-        Database db = Database.getInstance();
+        DatabaseMigrateService.migrateDatabase();
+        DatabaseQueryService.printResult();
 
+        Database db = Database.getInstance();
         ClientService clientService = new ClientService(db.getConnection());
 
-        long id = clientService.create("New Client");
-        System.out.println("id = " + id);
+//        long id = clientService.create("New Client");
+//        System.out.println("id = " + id);
 
-        System.out.println(clientService.getById(4));
+//        System.out.println(clientService.getById(4));
 
-        clientService.setName(5, "Renamed Client");
+//        clientService.setName(4, "Test Rename");
 
-        clientService.deleteById(11);
-
-        List<Client> clients = clientService.listAll();
-        clients.forEach(System.out::println);
+//        clientService.deleteById(11);
+//
+//        List<Client> clients = clientService.listAll();
+//        clients.forEach(System.out::println);
     }
 }
